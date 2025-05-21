@@ -1,0 +1,11 @@
+name: tetrika-test-task
+
+services:
+
+  back:
+    build:
+      context: ..
+      dockerfile: ./.devcontainer/Dockerfile
+    volumes:
+      - "..:/workspace:cached"
+    command: sleep infinity

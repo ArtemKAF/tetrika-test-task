@@ -1,0 +1,43 @@
+{
+  "name": "tetrika-test-task",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "back",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2.5.3": {
+      "installZsh": "false",
+      "installOhMyZsh": "false",
+      "installOhMyZshConfig": "false",
+      "upgradePackages": "true"
+    }
+  },
+  "mounts": [
+    "type=bind,source=${env:HOME}${env:USERPROFILE}/.ssh,target=/home/${localEnv:USER}/.ssh,readonly"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "python.pythonPath": "/usr/local/bin/python"
+      },
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "ms-azuretools.vscode-docker",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "donjayamanne.githistory",
+        "github.vscode-github-actions",
+        "GitHub.vscode-pull-request-github",
+        "esbenp.prettier-vscode",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "ms-python.python",
+        "ms-python.debugpy",
+        "njqdev.vscode-python-typehint",
+        "ms-vscode.test-adapter-converter"
+      ]
+    }
+  },
+  "remoteUser": "${localEnv:USER}"
+}
