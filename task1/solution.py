@@ -1,11 +1,30 @@
 import inspect
 from functools import wraps
-from typing import no_type_check
+from typing import Any, Callable, TypeVar, no_type_check
+
+T = TypeVar("T")
 
 
-def strict(func):
+def strict(func: Callable[..., T]) -> Callable[..., T]:
+    """
+    Декоратор, проверяющий типы аргументов и возвращаемого значения функции.
+
+    Если тип не соответствует аннотации — вызывает TypeError.
+
+    :param func: Оборачиваемая функция.
+    :return: Обёрнутая функция с проверкой типов.
+    """
+
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: Any, **kwargs: Any) -> T:
+        """
+        Внутренний обработчик, выполняющий проверку типов перед вызовом
+        функции.
+
+        :param args: Позиционные аргументы.
+        :param kwargs: Именованные аргументы.
+        :return: Результат оборачиваемой функции.
+        """
         sig = inspect.signature(func)
         bound_args = sig.bind(*args, **kwargs)
         bound_args.apply_defaults()
@@ -40,10 +59,20 @@ def strict(func):
 @strict
 @no_type_check
 def sum_two(a: int, b: int) -> int:
+    """
+    Складывает два целых числа.
+
+    :param a: Первое число.
+    :param b: Второе число.
+    :return: Сумма чисел.
+    """
     return a + b
 
 
 def main():
+    """
+    Основная функция для демонстрации работы декоратора.
+    """
     print(sum_two(1, 2))  # >>> 3
     print(sum_two(1, 2.4))  # >>> TypeError
 
